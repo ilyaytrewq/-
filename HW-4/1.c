@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
 {
     char s1[10001];
     char s2[10001];
-    char s[20002];
+    char s[20002] = {'\0'};
     int pr[20002];
     scanf("%10000s", s1);
     scanf("%10000s", s2);

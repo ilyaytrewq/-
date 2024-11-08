@@ -4,7 +4,7 @@
 int main(int argc, char const *argv[])
 {
     int l;
-    char buf[81], s[161];
+    char buf[81], s[161] = {'\0'};
     scanf("%d %80s", &l, buf);
     int n = strlen(buf);
     strcat(s, buf);

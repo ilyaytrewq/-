@@ -14,24 +14,23 @@ void calc(const char *s, int l, int r, int p, char *buf){
     strncpy(buf, s + p + 1, r - p);
     ll num2 = atoll(buf);
     ll ans = 0;
-    switch (s[p])
-    {
-    case '+':
-        ans = num1 + num2;
-        break;
-    case '-':
-        ans = num1 - num2;
-        break;
-    case '*':
-        ans = num1 * num2;
-        break;
-    case '/':
-        if(num2 == 0){
-            return;
-        }
-        ans = num1 / num2;
-    default:
-        break;
+    switch (s[p]) {
+        case '+':
+            ans = num1 + num2;
+            break;
+        case '-':
+            ans = num1 - num2;
+            break;
+        case '*':
+            ans = num1 * num2;
+            break;
+        case '/':
+            if(num2 == 0){
+                return;
+            }
+            ans = num1 / num2;
+        default:
+            break;
     }
     if((ans < 0 ? -ans : ans) <= 120000){
         printf("%lld %c %lld = %lld\n", num1, s[p], num2, ans);
