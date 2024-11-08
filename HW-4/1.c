@@ -15,10 +15,10 @@ void PrefixFunction(char *s, int n, int *pr){
 
 int main(int argc, char const *argv[])
 {
-    char s1[10005];
-    char s2[10005];
-    char s[20005];
-    int pr[20005];
+    char s1[10001];
+    char s2[10001];
+    char s[20002];
+    int pr[20002];
     scanf("%10000s", s1);
     scanf("%10000s", s2);
     int n = strlen(s1);

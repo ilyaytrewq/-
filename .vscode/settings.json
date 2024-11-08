@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "21.C": "cpp"
+        "21.C": "cpp",
+        "string.h": "c"
     }
 }
