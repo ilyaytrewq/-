@@ -6,12 +6,12 @@ typedef struct Node
     int key;
     int value;
     int height;
-    struct Node *left, *right;
+    struct Node* left, * right;
 } Node;
 
-Node *CreateNode(int key, int value)
+Node* CreateNode(int key, int value)
 {
-    Node *node = malloc(sizeof(Node));
+    Node* node = (Node *)malloc(sizeof(Node));
 
     if (node == NULL)
     {
@@ -28,22 +28,24 @@ Node *CreateNode(int key, int value)
     return node;
 }
 
-int height(Node *node)
+int height(Node* node)
 {
     return (node == NULL ? 0 : node->height);
 }
 
-void update(Node *node)
+void update(Node* node)
 {
     node->height = (height(node->left) > height(node->right) ? height(node->left) : height(node->right)) + 1;
 }
 
-int balance(Node *node)
+int balance(Node* node)
 {
+    if (node == NULL)
+        return 0;
     return height(node->left) - height(node->right);
 }
 
-Node *LeftRotation(Node *pred, Node *node)
+Node* LeftRotation(Node* pred, Node* node)
 {
     pred->right = node->left;
     node->left = pred;
@@ -52,7 +54,7 @@ Node *LeftRotation(Node *pred, Node *node)
     return node;
 }
 
-Node *RightRotation(Node *pred, Node *node)
+Node* RightRotation(Node* pred, Node* node)
 {
     pred->left = node->right;
     node->right = pred;
@@ -61,19 +63,19 @@ Node *RightRotation(Node *pred, Node *node)
     return node;
 }
 
-Node *RightZigZag(Node *pred, Node *node)
+Node* RightZigZag(Node* pred, Node* node)
 {
     node = LeftRotation(node, node->right);
     return RightRotation(pred, node);
 }
 
-Node *LeftZigZag(Node *pred, Node *node)
+Node* LeftZigZag(Node* pred, Node* node)
 {
     node = RightRotation(node, node->left);
     return LeftRotation(pred, node);
 }
 
-Node *FindNode(Node *node, int key)
+Node* FindNode(Node* node, int key)
 {
     if (node == NULL)
     {
@@ -94,7 +96,7 @@ Node *FindNode(Node *node, int key)
     return NULL;
 }
 
-Node *MakeBalanced(Node *node)
+Node* MakeBalanced(Node* node)
 {
 
     if (node == NULL)
@@ -104,7 +106,7 @@ Node *MakeBalanced(Node *node)
 
     if (balance(node) == 2)
     {
-        if (balance(node->left) == 1)
+        if (balance(node->left) >= 0)
         {
             node = RightRotation(node, node->left);
         }
@@ -115,7 +117,7 @@ Node *MakeBalanced(Node *node)
     }
     else if (balance(node) == -2)
     {
-        if (balance(node->right) == -1)
+        if (balance(node->right) <= 0)
         {
             node = LeftRotation(node, node->right);
         }
@@ -129,7 +131,7 @@ Node *MakeBalanced(Node *node)
     return node;
 }
 
-Node *InsertNode(Node *node, int key, int value)
+Node* InsertNode(Node* node, int key, int value)
 {
     if (node == NULL)
     {
@@ -156,12 +158,12 @@ Node *InsertNode(Node *node, int key, int value)
     return node;
 }
 
-Node *GetMin(Node *node)
+Node* GetMin(Node* node)
 {
     return (node->left ? GetMin(node->left) : node);
 }
 
-Node *DeleteNode(Node *node, int key)
+Node* DeleteNode(Node* node, int key)
 {
     if (node == NULL)
     {
@@ -179,29 +181,26 @@ Node *DeleteNode(Node *node, int key)
     }
     else
     {
-        Node *tmp = NULL;
+        Node* tmp = NULL;
         if ((node->left == NULL) || (node->right == NULL))
         {
             tmp = (node->left ? node->left : node->right);
-            free(node);
         }
         else
         {
-            Node *mn = GetMin(node->right);
+            Node* mn = GetMin(node->right);
 
             tmp = CreateNode(mn->key, mn->value);
             tmp->right = DeleteNode(node->right, tmp->key);
             tmp->left = node->left;
-
-            free(node);
         }
-
+        free(node);
         tmp = MakeBalanced(tmp);
         return tmp;
     }
 }
 
-void FreeTree(Node *node)
+void FreeTree(Node* node)
 {
     if (node == NULL)
         return;
@@ -210,14 +209,12 @@ void FreeTree(Node *node)
     free(node);
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char const* argv[])
 {
     char op = '-';
-    Node *root = NULL;
-
+    Node* root = NULL;
     while (op != 'F')
     {
-
         do
         {
             scanf("%c", &op);
@@ -233,7 +230,7 @@ int main(int argc, char const *argv[])
         {
             int key;
             scanf("%d", &key);
-            Node *node = FindNode(root, key);
+            Node* node = FindNode(root, key);
 
             if (node != NULL)
             {
@@ -244,7 +241,8 @@ int main(int argc, char const *argv[])
         {
             int key;
             scanf("%d", &key);
-            root = DeleteNode(root, key);
+            if (FindNode(root, key) != NULL)
+                root = DeleteNode(root, key);
         }
     }
     FreeTree(root);
