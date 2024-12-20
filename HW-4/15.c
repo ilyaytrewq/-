@@ -124,7 +124,7 @@ void readDialogues(int shift, double accel) {
     }
     printString(s);
     readString(s);
-    while (s[0] != 'E') {
+    while (strcmp(s, "End:\n")) {
         int n = strlen(s);
         int cnt = 0;
         for (int i = 0; i < n; ++i) {

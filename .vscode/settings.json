@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "21.C": "cpp",
-        "string.h": "c"
+        "string.h": "c",
+        "xtree": "cpp",
+        "xiosbase": "c"
     }
 }
